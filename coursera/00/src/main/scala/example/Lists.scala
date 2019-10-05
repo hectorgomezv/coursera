@@ -41,11 +41,14 @@ object Lists {
    * @return The largest element in `xs`
    * @throws java.util.NoSuchElementException if `xs` is an empty list
    */
+    def localMax(n: Int, l: List[Int]): List[Int] = {
+      if (n < l.head) l
+      else n :: l.tail
+    }
+
     def max(xs: List[Int]): Int = {
-      var candidate = xs.head
-      if (candidate <= xs.tail.head) {
-        candidate = xs.tail.head
-        max(xs.tail)
-      } else candidate
+      if (xs.isEmpty) throw new NoSuchElementException
+      if (xs.size == 1) xs.head
+      else max(localMax(xs.head, xs.tail))
     }
   }
