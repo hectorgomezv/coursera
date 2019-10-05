@@ -4,5 +4,9 @@
 [0m[[0minfo[0m] [0m[32m- details why one plus one is not three[0m[0m
 [0m[[0minfo[0m] [0m[32m- intNotZero throws an exception if its argument is 0[0m[0m
 [0m[[0minfo[0m] [0m[32m- sum of a few numbers[0m[0m
-[0m[[0minfo[0m] [0m[31m- max of a few numbers *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  3 did not equal 9 (ListsSuite.scala:121)[0m[0m
+[0m[[0minfo[0m] [0m[32m- sum of an empty list of numbers[0m[0m
+[0m[[0minfo[0m] [0m[32m- sum of a list with negative numbers[0m[0m
+[0m[[0minfo[0m] [0m[32m- sum of a list with negative numbers and zeros[0m[0m
+[0m[[0minfo[0m] [0m[32m- max of a few numbers[0m[0m
+[0m[[0minfo[0m] [0m[32m- max of a few numbers with negative numbers[0m[0m
+[0m[[0minfo[0m] [0m[32m- max of a an empty list[0m[0m

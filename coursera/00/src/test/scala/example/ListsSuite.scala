@@ -138,7 +138,9 @@ import org.scalatest.junit.JUnitRunner
   }
 
   test("max of a an empty list") {
-    intercept[NoSuchElementException]
+    intercept[NoSuchElementException] {
+      max(List())
+    }
   }
 
 }
