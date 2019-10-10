@@ -8,6 +8,8 @@ object Main {
         print(pascal(col, row) + " ")
       println()
     }
+    println("(just an) example".toList)
+    println(balance("((just an)) e(x(a)mple".toList))
   }
 
   /**
@@ -21,7 +23,16 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = ???
+    def balance(chars: List[Char]): Boolean = {
+      def balanceIter(chars: List[Char], openings: Int): Boolean = {
+        if (chars.isEmpty && openings == 0) true
+        else if (chars.isEmpty && openings != 0) false
+        else if (chars.head == '(') balanceIter(chars.tail, openings + 1)
+        else if (chars.head == ')') balanceIter(chars.tail, openings - 1)
+        else balanceIter(chars.tail, openings)
+      }
+      balanceIter(chars, 0);
+    }
   
   /**
    * Exercise 3
