@@ -68,20 +68,21 @@ object FunSets {
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-    def exists(s: Set, p: Int => Boolean): Boolean = {
-      @scala.annotation.tailrec
-      def iter(x: Int): Boolean =
-        if (contains(s, x) && p(x)) true
-        else (!limitFn(x) && iter(x + 1))
-
-      iter(-bound)
-    }
+    def exists(s: Set, p: Int => Boolean): Boolean = (!forall(s, p))
 
   
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-    def map(s: Set, f: Int => Int): Set = ???
+    def map(s: Set, f: Int => Int): Set = {
+      @scala.annotation.tailrec
+      def iter(x: Int, acc: Set): Set = {
+        if (limitFn(x)) acc
+        else if (contains(s, x)) iter(x + 1, diff(union(acc, singletonSet(f(x))), s))
+        else iter(x + 1, acc)
+      }
+      iter(-bound, s)
+    }
   
   /**
    * Displays the contents of a set
