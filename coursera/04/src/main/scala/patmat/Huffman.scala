@@ -25,8 +25,8 @@ object Huffman {
 
   // Part 1: Basics
     def weight(tree: CodeTree): Int = tree match {
-      case Leaf(_, weight) => weight
-      case Fork(_, _, _, weight) => weight
+      case Leaf(_, _) => 1
+      case Fork(left, right, _, _) => weight(left) + weight(right)
     }
   
     def chars(tree: CodeTree): List[Char] = tree match {
@@ -85,12 +85,13 @@ object Huffman {
    * head of the list should have the smallest weight), where the weight
    * of a leaf is the frequency of the character.
    */
-    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = ???
+    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] =
+      freqs.sortBy(x => x._2).map(x => Leaf(x._1, 1))
   
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-    def singleton(trees: List[CodeTree]): Boolean = ???
+    def singleton(trees: List[CodeTree]): Boolean = trees.size == 3
   
   /**
    * The parameter `trees` of this function is a list of code trees ordered
