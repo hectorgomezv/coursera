@@ -155,7 +155,16 @@ object Huffman {
    * This function decodes the bit sequence `bits` using the code tree `tree` and returns
    * the resulting list of characters.
    */
-    def decode(tree: CodeTree, bits: List[Bit]): List[Char] = ???
+    def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
+      def decodeAcc(rest: CodeTree, bits: List[Bit]): List[Char] = rest match {
+        case Leaf(c, _) if bits.isEmpty => List(c)
+        case Leaf(c, _) => c :: decodeAcc(tree, bits)
+        case Fork(left, _, _, _) if bits.head == 0 => decodeAcc(left, bits.tail)
+        case Fork(_, right, _, _) => decodeAcc(right, bits.tail)
+      }
+
+      decodeAcc(tree, bits)
+    }
   
   /**
    * A Huffman coding tree for the French language.
@@ -173,7 +182,7 @@ object Huffman {
   /**
    * Write a function that returns the decoded secret
    */
-    def decodedSecret: List[Char] = ???
+    def decodedSecret: List[Char] = decode(frenchCode, secret)
   
 
   // Part 4a: Encoding using Huffman tree
@@ -182,7 +191,15 @@ object Huffman {
    * This function encodes `text` using the code tree `tree`
    * into a sequence of bits.
    */
-    def encode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+    def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+      def encodeAcc(tree:  CodeTree)(c: Char): List[Bit] = tree match {
+        case Leaf(_, _) => List()
+        case Fork(left, _, _, _) if chars(left).contains(c) => 0 :: encodeAcc(left)(c)
+        case Fork(_, right, _, _) => 1 :: encodeAcc(right)(c)
+      }
+
+      text flatMap encodeAcc(tree)
+    }
   
   // Part 4b: Encoding using code table
 
@@ -192,7 +209,7 @@ object Huffman {
    * This function returns the bit sequence that represents the character `char` in
    * the code table `table`.
    */
-    def codeBits(table: CodeTable)(char: Char): List[Bit] = ???
+    def codeBits(table: CodeTable)(char: Char): List[Bit] = table..filter( (code) => code._1 == char ).head._2
   
   /**
    * Given a code tree, create a code table which contains, for every character in the
